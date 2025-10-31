@@ -108,4 +108,17 @@ class ValidatorTest {
         }
         assertThat(exception.message).isEqualTo(ErrorType.NOT_MULTIPLE_OF_1000.message)
     }
+
+    @Test
+    fun `validateArgumentCounts 정상 입력`() {
+        Validator.validateArgumentCounts(1, 1)
+    }
+
+    @Test
+    fun `validateArgumentCounts 매개 변수의 갯수가 다를 경우 예외`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            Validator.validateArgumentCounts(1, 2)
+        }
+        assertThat(exception.message).isEqualTo(ErrorType.MESSAGE_ARGUMENT_NOT_MATCHED.message)
+    }
 }

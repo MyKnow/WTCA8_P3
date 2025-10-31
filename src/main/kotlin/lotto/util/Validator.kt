@@ -38,4 +38,8 @@ object Validator {
     fun validateMultipleOf1000(input: Int) {
         requireWithError(input % MULTIPLE_TARGET_NUMBER == 0, ErrorType.NOT_MULTIPLE_OF_1000)
     }
+
+    fun validateArgumentCounts(actual: Int, expected: Int) {
+        requireWithError(actual == expected, ErrorType.MESSAGE_ARGUMENT_NOT_MATCHED)
+    }
 }
