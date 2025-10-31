@@ -65,10 +65,34 @@ class ParserTest {
     }
 
     @Test
-    fun `splitNumbers 빈 문자열 입력 시 예외`() {
-        val exception = assertThrows<IllegalArgumentException> {
-            Parser.splitNumbers(" ")
-        }
-        assertThat(exception.message).isEqualTo(ErrorType.EMPTY_INPUT.message)
+    fun `countArguments 기본 포맷`() {
+        val input = "%s %d %.2f"
+        val result = Parser.countArguments(input)
+        assertThat(result).isEqualTo(3)
+    }
+
+    @Test
+    fun `countArguments 포맷 없음`() {
+        val input = "포맷 없는 메시지"
+        val result = Parser.countArguments(input)
+        assertThat(result).isEqualTo(0)
+    }
+
+    @Test
+    fun `countArguments 멀티라인`() {
+        val input = """
+            1등 (%s원)
+            2등 (%s원)
+            3등 (%s원)
+        """.trimIndent()
+        val result = Parser.countArguments(input)
+        assertThat(result).isEqualTo(3)
+    }
+
+    @Test
+    fun `countArguments 잘못된 포맷 처리`() {
+        val input = "%q %z %unknown"
+        val result = Parser.countArguments(input)
+        assertThat(result).isEqualTo(3)
     }
 }

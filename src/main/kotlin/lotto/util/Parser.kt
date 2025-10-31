@@ -1,8 +1,6 @@
 package lotto.util
 
 object Parser {
-    private val delimiters = listOf(",")
-    private val regex: Regex = delimiters.joinToString("|") { Regex.escape(it) }.toRegex()
 
     fun toInteger(input: String): Int {
         Validator.validateNonEmpty(input)
@@ -12,11 +10,16 @@ object Parser {
 
     fun parseByDelimiters(input: String): List<String> {
         Validator.validateNonEmpty(input)
+        val regex = Regex("[,]")
         return input.split(regex)
     }
 
     fun splitNumbers(input: String): List<Int> {
         val tokens = parseByDelimiters(input).map { it.trim() }
         return tokens.map { toInteger(it) }
+    }
+
+    fun countArguments(input: String): Int {
+        return Regex("%[\\w.]*[a-zA-Z]").findAll(input).count()
     }
 }
