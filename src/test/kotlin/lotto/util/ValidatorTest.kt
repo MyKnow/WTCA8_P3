@@ -1,9 +1,9 @@
 package lotto.util
 
 import lotto.constant.ErrorType
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.assertj.core.api.Assertions.assertThat
 
 @Suppress("NonAsciiCharacters")
 class ValidatorTest {
