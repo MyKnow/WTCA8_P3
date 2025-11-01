@@ -44,28 +44,27 @@ class ValidatorTest {
 
     @Test
     fun `validateIntegerSizeMatch 정상 입력`() {
-        Validator.validateIntegerSizeMatch(listOf(1, 2, 3), 3)
+        Validator.validateIntegerSizeMatch(listOf(1, 2, 3, 4, 5, 6), TEST_SIZE)
     }
 
     @Test
     fun `validateIntegerSizeMatch 크기 불일치 시 예외`() {
         val exception = assertThrows<IllegalArgumentException> {
-            Validator.validateIntegerSizeMatch(listOf(1, 2), 3)
+            Validator.validateIntegerSizeMatch(listOf(1, 2), TEST_SIZE)
         }
         assertThat(exception.message).isEqualTo(ErrorType.INVALID_INPUT_COUNT.message)
     }
 
     @Test
     fun `validateIntegerRange 정상 입력`() {
-        Validator.validateIntegerRange(1, 1, 10)
-        Validator.validateIntegerRange(5, 1, 10)
-        Validator.validateIntegerRange(10, 1, 10)
+        val sampleNumbers = listOf<Int>(1, 5, 10)
+        Validator.validateIntegerRange(sampleNumbers, TEST_RANGE)
     }
 
     @Test
     fun `validateIntegerRange 범위 벗어날 시 예외`() {
         val exception = assertThrows<IllegalArgumentException> {
-            Validator.validateIntegerRange(11, 1, 10)
+            Validator.validateIntegerRange(listOf<Int>(46), TEST_RANGE)
         }
         assertThat(exception.message).isEqualTo(ErrorType.INVALID_NUMBER_RANGE.message)
     }
@@ -120,5 +119,10 @@ class ValidatorTest {
             Validator.validateArgumentCounts(1, 2)
         }
         assertThat(exception.message).isEqualTo(ErrorType.MESSAGE_ARGUMENT_NOT_MATCHED.message)
+    }
+
+    companion object {
+        const val TEST_SIZE = 6
+        val TEST_RANGE = 1..45
     }
 }

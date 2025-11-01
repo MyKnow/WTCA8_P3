@@ -23,8 +23,8 @@ object Validator {
         requireWithError(input.size == size, ErrorType.INVALID_INPUT_COUNT)
     }
 
-    fun validateIntegerRange(input: Int, min: Int, max: Int) {
-        requireWithError(input in min..max, ErrorType.INVALID_NUMBER_RANGE)
+    fun validateIntegerRange(input: List<Int>, range: IntRange) {
+        requireWithError(input.all { it in range }, ErrorType.INVALID_NUMBER_RANGE)
     }
 
     fun validateUniqueNumber(input: List<Int>) {
