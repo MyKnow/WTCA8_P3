@@ -5,8 +5,7 @@ import lotto.util.Validator
 
 object LottoShop {
     fun calculateLottoCount(amount: Int): Int {
-        Validator.validatePositiveInteger(amount)
-        Validator.validateMultipleOf1000(amount)
+        Validator.validateAmountRule(amount)
         return amount / LottoRule.PRICE.value
     }
 

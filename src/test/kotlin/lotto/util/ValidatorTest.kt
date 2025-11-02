@@ -1,6 +1,7 @@
 package lotto.util
 
 import lotto.constant.ErrorType
+import lotto.constant.LottoRule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -148,8 +149,38 @@ class ValidatorTest {
         assertThat(result.message).isEqualTo(ErrorType.INVALID_MATCH_COUNT.message)
     }
 
+    @Test
+    fun `validatePurchaseLimit 정상 입력`() {
+        assertDoesNotThrow { Validator.validatePurchaseLimit(100_000) }
+        assertDoesNotThrow { Validator.validatePurchaseLimit(1_000) }
+    }
+
+    @Test
+    fun `validatePurchaseLimit 100_000 초과 시 예외`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            Validator.validatePurchaseLimit(100_001)
+        }
+        assertThat(exception.message).isEqualTo(ErrorType.MAX_PURCHASE_LIMIT.message)
+    }
+
+    @Test
+    fun `validateAmountRule 정상 입력`() {
+        assertDoesNotThrow { Validator.validateAmountRule(100_000) }
+        assertDoesNotThrow { Validator.validateAmountRule(1_000) }
+    }
+
+    @Test
+    fun `validateAmountRule 100_000 초과 시 예외`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            Validator.validateAmountRule(100_001)
+        }
+        assertThat(exception.message).isEqualTo(ErrorType.MAX_PURCHASE_LIMIT.message)
+    }
+
     companion object {
-        const val TEST_SIZE = 6
-        val TEST_RANGE = 1..45
+        val TEST_SIZE = LottoRule.SIZE.value
+        val TEST_RANGE = LottoRule.START_NUMBER.value..LottoRule.END_NUMBER.value
     }
 }
+
+

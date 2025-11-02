@@ -48,4 +48,14 @@ object Validator {
     fun validateMatchCount(count: Int) {
         requireWithError(count in 0..LottoRule.SIZE.value, ErrorType.INVALID_MATCH_COUNT)
     }
+
+    fun validatePurchaseLimit(input: Int) {
+        requireWithError(input <= LottoRule.MAX_PURCHASE_LIMIT.value, ErrorType.MAX_PURCHASE_LIMIT)
+    }
+
+    fun validateAmountRule(input: Int) {
+        validatePositiveInteger(input)
+        validatePurchaseLimit(input)
+        validateMultipleOf1000(input)
+    }
 }
