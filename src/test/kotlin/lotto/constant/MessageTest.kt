@@ -22,14 +22,14 @@ class MessageTest {
 
     @Test
     fun `format 정상 동작 - 여러 인자`() {
-        val result = Message.MATCH_LOG.format(3, 5000, 2)
+        val result = Message.MATCH_LOG.format("3", "5,000", "2")
         assertThat(result).isEqualTo("3개 일치 (5,000원) - 2개")
     }
 
     @Test
     fun `format 예외 - 인자 수 불일치`() {
         val exception = assertThrows<IllegalArgumentException> {
-            Message.MATCH_LOG.format(3, "5,000") // 3번째 인자 누락
+            Message.MATCH_LOG.format("3", "5,000") // 3번째 인자 누락
         }
         assertThat(exception.message).contains(ErrorType.MESSAGE_ARGUMENT_NOT_MATCHED.message)
     }
