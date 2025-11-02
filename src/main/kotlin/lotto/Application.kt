@@ -1,5 +1,12 @@
 package lotto
 
+import lotto.controller.LottoController
+import java.lang.Exception
+
 fun main() {
-    // TODO: 프로그램 구현
+    try {
+        LottoController.run()
+    } catch (e: Exception) {
+        print(e.message)
+    }
 }
