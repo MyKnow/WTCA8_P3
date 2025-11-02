@@ -42,4 +42,8 @@ object Validator {
     fun validateArgumentCounts(actual: Int, expected: Int) {
         requireWithError(actual == expected, ErrorType.MESSAGE_ARGUMENT_NOT_MATCHED)
     }
+
+    fun validateAscendingOrder(input: List<Int>) {
+        requireWithError(input.zipWithNext().all { (a, b) -> a < b }, ErrorType.NOT_ASCENDING_ORDER)
+    }
 }

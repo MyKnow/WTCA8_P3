@@ -121,6 +121,19 @@ class ValidatorTest {
         assertThat(exception.message).isEqualTo(ErrorType.MESSAGE_ARGUMENT_NOT_MATCHED.message)
     }
 
+    @Test
+    fun `validateAscendingOrder 정상 입력`() {
+        Validator.validateAscendingOrder(listOf(1, 2, 3, 4, 5, 6))
+    }
+
+    @Test
+    fun `validateAscendingOrder 비정렬 입력 시 예외`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            Validator.validateAscendingOrder(listOf(1, 3, 2, 5, 4))
+        }
+        assertThat(exception.message).isEqualTo(ErrorType.NOT_ASCENDING_ORDER.message)
+    }
+
     companion object {
         const val TEST_SIZE = 6
         val TEST_RANGE = 1..45

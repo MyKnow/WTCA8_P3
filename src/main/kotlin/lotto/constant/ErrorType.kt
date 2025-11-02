@@ -10,7 +10,8 @@ enum class ErrorType(message: String) {
     DUPLICATE_NUMBER("로또 번호는 서로 겹치지 않아야 합니다."),
     NOT_POSITIVE_NUMBER("양의 정수가 입력되어야 합니다."),
     NOT_MULTIPLE_OF_1000("구매 금액은 1000의 배수여야 합니다."),
-    MESSAGE_ARGUMENT_NOT_MATCHED("메세지의 매개변수 갯수가 일치하지 않습니다");
+    MESSAGE_ARGUMENT_NOT_MATCHED("메세지의 매개변수 갯수가 일치하지 않습니다"),
+    NOT_ASCENDING_ORDER("오름차순 정렬되어 있지 않습니다.");
 
     val message: String = ERROR_PREFIX + message
 }
