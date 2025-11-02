@@ -1,27 +1,52 @@
 package lotto.controller
 
+import lotto.constant.LottoRank
 import lotto.model.DHLottery
+import lotto.model.Lotto
 import lotto.model.UserWallet
 import lotto.model.UserWalletCalculator
 import lotto.view.InputView
 import lotto.view.OutputView
+import java.util.SortedMap
 
-object LottoController {
-    fun run() {
+object LottoFactory {
+    fun createUserWallet(): UserWallet {
         val amount = InputView.readPurchaseAmount()
-        val wallet = UserWallet(amount)
+        return UserWallet(amount)
+    }
 
-        val lottos = wallet.purchaseLottos()
-        OutputView.printLottos(lottos)
-
+    fun createLottery(): DHLottery {
         val winningNumbers = InputView.readWinningLottoNumbers()
         val bonusNumber = InputView.readBonusLottoNumber()
-        val lottery = DHLottery(winningNumbers, bonusNumber)
+        return DHLottery(winningNumbers, bonusNumber)
+    }
+}
 
-        val sortedResult = UserWalletCalculator.getSortedResult(wallet, lottery)
-        OutputView.printStatistics(sortedResult)
+class LottoController {
+    private val wallet: UserWallet = LottoFactory.createUserWallet()
+    private val lottery: DHLottery by lazy { LottoFactory.createLottery() }
+    val result: SortedMap<LottoRank, Int> by lazy { handleRankResult() }
 
-        val rateOfReturn = UserWalletCalculator.getRateOfReturn(amount, sortedResult)
-        OutputView.printRateOfReturn(rateOfReturn)
+    fun handlePurchase(): List<Lotto> {
+        return wallet.purchaseLottos()
+    }
+
+    fun handleRankResult(): SortedMap<LottoRank, Int> {
+        return UserWalletCalculator.getSortedResult(wallet, lottery)
+    }
+
+    fun handleRateOfReturn(): Double {
+        return UserWalletCalculator.getRateOfReturn(wallet.amount, result)
+    }
+
+    fun run() {
+        val lottos = handlePurchase()
+        val rankResult = result
+        val rate = handleRateOfReturn()
+
+        // 출력까지 여기서 처리
+        OutputView.printLottos(lottos)
+        OutputView.printStatistics(rankResult)
+        OutputView.printRateOfReturn(rate)
     }
 }
