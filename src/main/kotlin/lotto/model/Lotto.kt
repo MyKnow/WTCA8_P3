@@ -1,20 +1,16 @@
 package lotto.model
 
+import lotto.constant.LottoRule
 import lotto.util.Validator
 
 class Lotto(private val numbers: List<Int>) {
     init {
-        Validator.validateIntegerSizeMatch(numbers, SIZE)
-        Validator.validateIntegerRange(numbers, RANGE)
+        val lottoRange = LottoRule.START_NUMBER.value..LottoRule.END_NUMBER.value
+        Validator.validateIntegerSizeMatch(numbers, LottoRule.SIZE.value)
+        Validator.validateIntegerRange(numbers, lottoRange)
         Validator.validateUniqueNumber(numbers)
+        Validator.validateAscendingOrder(numbers)
     }
 
-    override fun toString(): String {
-        return numbers.sorted().joinToString(", ", "[", "]")
-    }
-
-    companion object {
-        const val SIZE = 6
-        val RANGE = 1..45
-    }
+    fun getNumbers(): List<Int> = numbers
 }
