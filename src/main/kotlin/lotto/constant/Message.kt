@@ -8,8 +8,8 @@ enum class Message(private val template: String) {
     WINNING_LOTTO_NUMBERS("당첨 번호를 입력해 주세요."),
     BONUS_LOTTO_NUMBERS("보너스 번호를 입력해 주세요."),
     PURCHASED_COUNT("%d개를 구매했습니다."),
-    MATCH_LOG("%d개 일치 (%s원) - %d개"),
-    MATCH_LOG_WITH_BONUS("%d개 일치, 보너스 볼 일치 (%s원) - %d개"),
+    MATCH_LOG("%s개 일치 (%s원) - %s개"),
+    MATCH_LOG_WITH_BONUS("%s개 일치, 보너스 볼 일치 (%s원) - %s개"),
     RATES_OF_RETURN("총 수익률은 %.1f%%입니다."),
     RESULT_TITLE("당첨 통계\n---");
 
