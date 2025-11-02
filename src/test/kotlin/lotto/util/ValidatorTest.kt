@@ -3,6 +3,7 @@ package lotto.util
 import lotto.constant.ErrorType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 @Suppress("NonAsciiCharacters")
@@ -10,7 +11,7 @@ class ValidatorTest {
 
     @Test
     fun `validateNonEmpty 정상 입력`() {
-        Validator.validateNonEmpty("1")
+        assertDoesNotThrow { Validator.validateNonEmpty("1") }
     }
 
     @Test
@@ -23,7 +24,7 @@ class ValidatorTest {
 
     @Test
     fun `validateIntegerFormat 정상 입력`() {
-        Validator.validateIntegerFormat("123")
+        assertDoesNotThrow { Validator.validateIntegerFormat("123") }
     }
 
     @Test
@@ -44,7 +45,7 @@ class ValidatorTest {
 
     @Test
     fun `validateIntegerSizeMatch 정상 입력`() {
-        Validator.validateIntegerSizeMatch(listOf(1, 2, 3, 4, 5, 6), TEST_SIZE)
+        assertDoesNotThrow { Validator.validateIntegerSizeMatch(listOf(1, 2, 3, 4, 5, 6), TEST_SIZE) }
     }
 
     @Test
@@ -58,7 +59,7 @@ class ValidatorTest {
     @Test
     fun `validateIntegerRange 정상 입력`() {
         val sampleNumbers = listOf<Int>(1, 5, 10)
-        Validator.validateIntegerRange(sampleNumbers, TEST_RANGE)
+        assertDoesNotThrow { Validator.validateIntegerRange(sampleNumbers, TEST_RANGE) }
     }
 
     @Test
@@ -71,7 +72,7 @@ class ValidatorTest {
 
     @Test
     fun `validateUniqueNumber 정상 입력`() {
-        Validator.validateUniqueNumber(listOf(1, 2, 3))
+        assertDoesNotThrow { Validator.validateUniqueNumber(listOf(1, 2, 3)) }
     }
 
     @Test
@@ -84,7 +85,7 @@ class ValidatorTest {
 
     @Test
     fun `validatePositiveInteger 정상 입력`() {
-        Validator.validatePositiveInteger(5)
+        assertDoesNotThrow { Validator.validatePositiveInteger(5) }
     }
 
     @Test
@@ -97,7 +98,7 @@ class ValidatorTest {
 
     @Test
     fun `validateMultipleOf1000 정상 입력`() {
-        Validator.validateMultipleOf1000(3000)
+        assertDoesNotThrow { Validator.validateMultipleOf1000(3000) }
     }
 
     @Test
@@ -110,7 +111,7 @@ class ValidatorTest {
 
     @Test
     fun `validateArgumentCounts 정상 입력`() {
-        Validator.validateArgumentCounts(1, 1)
+        assertDoesNotThrow { Validator.validateArgumentCounts(1, 1) }
     }
 
     @Test
@@ -123,7 +124,7 @@ class ValidatorTest {
 
     @Test
     fun `validateAscendingOrder 정상 입력`() {
-        Validator.validateAscendingOrder(listOf(1, 2, 3, 4, 5, 6))
+        assertDoesNotThrow { Validator.validateAscendingOrder(listOf(1, 2, 3, 4, 5, 6)) }
     }
 
     @Test
@@ -132,6 +133,19 @@ class ValidatorTest {
             Validator.validateAscendingOrder(listOf(1, 3, 2, 5, 4))
         }
         assertThat(exception.message).isEqualTo(ErrorType.NOT_ASCENDING_ORDER.message)
+    }
+
+    @Test
+    fun `validateMatchCount 정상 입력`() {
+        assertDoesNotThrow { Validator.validateMatchCount(TEST_SIZE) }
+    }
+
+    @Test
+    fun `validateMatchCount 비정상 갯수 입력 시 예외`() {
+        val result = assertThrows<IllegalArgumentException> {
+            Validator.validateMatchCount(TEST_SIZE + 1)
+        }
+        assertThat(result.message).isEqualTo(ErrorType.INVALID_MATCH_COUNT.message)
     }
 
     companion object {

@@ -1,11 +1,9 @@
 package lotto.util
 
 import lotto.constant.ErrorType
+import lotto.constant.LottoRule
 
 object Validator {
-    private const val MIN_POSITIVE_NUMBER = 1
-    private const val MULTIPLE_TARGET_NUMBER = 1000
-
     @Suppress("NOTHING_TO_INLINE")
     private inline fun requireWithError(condition: Boolean, error: ErrorType) {
         require(condition) { error.message }
@@ -32,11 +30,11 @@ object Validator {
     }
 
     fun validatePositiveInteger(input: Int) {
-        requireWithError(MIN_POSITIVE_NUMBER <= input, ErrorType.NOT_POSITIVE_NUMBER)
+        requireWithError(1 <= input, ErrorType.NOT_POSITIVE_NUMBER)
     }
 
     fun validateMultipleOf1000(input: Int) {
-        requireWithError(input % MULTIPLE_TARGET_NUMBER == 0, ErrorType.NOT_MULTIPLE_OF_1000)
+        requireWithError(input % LottoRule.PRICE.value == 0, ErrorType.NOT_MULTIPLE_OF_1000)
     }
 
     fun validateArgumentCounts(actual: Int, expected: Int) {
@@ -45,5 +43,9 @@ object Validator {
 
     fun validateAscendingOrder(input: List<Int>) {
         requireWithError(input.zipWithNext().all { (a, b) -> a < b }, ErrorType.NOT_ASCENDING_ORDER)
+    }
+
+    fun validateMatchCount(count: Int) {
+        requireWithError(count in 0..LottoRule.SIZE.value, ErrorType.INVALID_MATCH_COUNT)
     }
 }

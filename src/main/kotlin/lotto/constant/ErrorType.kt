@@ -11,7 +11,8 @@ enum class ErrorType(message: String) {
     NOT_POSITIVE_NUMBER("양의 정수가 입력되어야 합니다."),
     NOT_MULTIPLE_OF_1000("구매 금액은 1000의 배수여야 합니다."),
     MESSAGE_ARGUMENT_NOT_MATCHED("메세지의 매개변수 갯수가 일치하지 않습니다"),
-    NOT_ASCENDING_ORDER("오름차순 정렬되어 있지 않습니다.");
+    NOT_ASCENDING_ORDER("오름차순 정렬되어 있지 않습니다."),
+    INVALID_MATCH_COUNT("비정상적인 로또 적중 갯수입니다.");
 
     val message: String = ERROR_PREFIX + message
 }
